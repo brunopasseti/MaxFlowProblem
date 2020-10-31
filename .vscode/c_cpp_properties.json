@@ -1,0 +1,26 @@
+{
+    "configurations": [
+        {
+            "name": "Linux",
+            "includePath": [
+                "${workspaceFolder}/**",
+                "/opt/ibm/ILOG/CPLEX_Studio1210/cplex/include",
+                "/opt/ibm/ILOG/CPLEX_Studio1210/concert/include",
+                "include"
+            ],
+            "defines": [],
+            "compilerPath": "/usr/bin/clang",
+            "cStandard": "c11",
+            "cppStandard": "c++14",
+            "intelliSenseMode": "clang-x64",
+            "compilerArgs": [
+                "-DIL_STD",
+                "-I/opt/ibm/ILOG/CPLEX_Studio1210/cplex/include",
+                "-I/opt/ibm/ILOG/CPLEX_Studio1210/concert/include",
+                "-Iinclude",
+                "-fPIC"
+            ]
+        }
+    ],
+    "version": 4
+}
