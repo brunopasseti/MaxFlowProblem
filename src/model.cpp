@@ -87,12 +87,14 @@ void Model::initCplexFromModel(){
 }
 void Model::solve(){
     this->_cplex.exportModel("modelo.lp");
+    // this->_cplex.setOut(_env.getNullStream());
     try {
         this->_cplex.solve();
     } catch(IloException e) {
         std::cerr <<"Error" <<  ": " << e.getMessage() << std::endl;
     }
     std::cout << "status: " << this->_cplex.getStatus() << std::endl;
+    printf("x:\n");
     for(int i = 0; i < _data.n; i++){
         for(int j = 0; j < _data.n; j++){
             if(i == j) continue;
@@ -100,6 +102,12 @@ void Model::solve(){
         }
         puts("");
     }
+    double flux = 0;
+    for(int i = 0; i < _data.n; i++){
+        if(i == _data.s || i == _data.t)continue;
+        flux+=(_cplex.getValue(x[i][_data.t]));
+    }
+    printf("Fluxo Máximo: %2.2lf\n", flux);
 }
 void Model::initData(){
     l = std::vector<std::vector<int>>(_data.n, std::vector<int>(_data.n, 0));
@@ -107,7 +115,7 @@ void Model::initData(){
     for(int j = 0; j < _data.n; j++){
         F_barra += _data.u[_data.s][j];
     }
-    printf("F_b: %d\n", F_barra);  
+    // printf("F_b: %d\n", F_barra);  
     // Primeiro, configure cij = 0 para todos os arcos existentes de modo a refletir a ausencia de custos no problema do fluxo maximo.
     c = std::vector<std::vector<int>>(_data.n, std::vector<int>(_data.n, 0));
     // Em segundo lugar, selecione uma quantidade F_barra, que e um limite superior seguro sobre o fluxo viavel maximo pela rede e depois

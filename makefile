@@ -47,7 +47,7 @@ OBJS = $(patsubst $(SRCDIR)/%.cpp, $(OBJDIR)/%.o, $(SRCS))
 #############################
 
 #### regra principal, gera o executavel
-po: $(OBJS) 
+pfm: $(OBJS) 
 	@echo  "\033[31m \nLinking all objects files: \033[0m"
 	$(CPPC) $(OBJS) $(OBJSUTILS) -o $@ $(CCLNFLAGS)
 ############################
@@ -71,13 +71,9 @@ $(OBJDIR)/%.o: $(SRCDIR)/%.cpp
 clean:
 	@echo "\033[31mcleaning obj directory \033[0m"
 	@rm -f $(OBJDIR)/*.o $(OBJDIR)/*.d
-	@rm po
+	@rm pfm
 
 dirs:
 	@mkdir $(OBJDIR)
 
-rebuild: clean po
-
-image: po
-	./po instance/ffbrp/n20q30Ar25b20ff25.ffbrp
-	cat output.dot | neato -Tpng > output.png
+rebuild: clean pfm

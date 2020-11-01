@@ -9,6 +9,6 @@ int main(int argc, char const *argv[]){
     // data.generateDot();
     Model model(data);
     model.solve();
-    model.generateDot();
+    // model.generateDot();
     return 0;
 }
